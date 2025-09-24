@@ -1,0 +1,13 @@
+{
+    "exclude": ["node_modules", "build"],
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "NodeNext",
+        "strict": true,
+        "verbatimModuleSyntax": true,
+        "skipLibCheck": true,
+        "outDir": "./build",
+        "types": ["node"],
+        "paths": {}
+    }
+}

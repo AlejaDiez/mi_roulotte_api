@@ -8,6 +8,13 @@
         "skipLibCheck": true,
         "outDir": "./build",
         "types": ["./worker-configuration.d.ts", "node"],
-        "paths": {}
+        "paths": {
+            "@controllers/*": ["./src/controllers/*"],
+            "@db/*": ["./src/db/*"],
+            "@middlewares/*": ["./src/middlewares/*"],
+            "@models/*": ["./src/models/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@utils/*": ["./src/utils/*"]
+        }
     }
 }

@@ -1,0 +1,33 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "mi-roulotte-api",
+    "compatibility_date": "2025-06-01",
+    "compatibility_flags": ["nodejs_compat"],
+    "main": "src/index.ts",
+    "observability": {
+        "enabled": true
+    },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "mi-roulotte-db",
+            "database_id": "2f584243-2f1b-4425-b7d6-c0971f34f976",
+            "migrations_dir": "db/migrations"
+        }
+    ],
+    "r2_buckets": [
+        {
+            "binding": "BUCKET",
+            "bucket_name": "mi-roulotte-assets"
+        }
+    ],
+    "images": {
+        "binding": "IMAGES"
+    }
+    // "routes": [
+    //     {
+    //         "pattern": "api.miroulotte.es",
+    //         "custom_domain": true
+    //     }
+    // ]
+}

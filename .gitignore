@@ -20,3 +20,8 @@ pnpm-debug.log*
 # editor directories
 .vscode/
 .idea/
+
+# wrangler files
+.wrangler
+.dev.vars*
+worker-configuration.d.ts

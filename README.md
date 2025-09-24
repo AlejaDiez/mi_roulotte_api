@@ -34,19 +34,24 @@ This project is organized into separate modules for better structure and scalabi
     npm install
     ```
 
-3. Run the development server:
+3. Build Cloudflare types:
+
+    ```bash
+    npm run cf-typegen
+    ```
+
+4. Run the development server:
 
     ```bash
     npm run dev
     ```
 
-4. Open `http://localhost:3010` in your browser.
+5. Open `http://localhost:3010` in your browser.
 
 ## 📦 Scripts
 
 - `npm run dev` – Start development server
-- `npm run build` – Build for production
-- `npm run preview` – Preview production build locally
+- `npm run deploy` – Deploy production build to cloudflare
 
 ## 📜 License
 

@@ -14,13 +14,18 @@
     "scripts": {
         "dev": "wrangler dev --port 3010",
         "deploy": "wrangler deploy --minify",
-        "cf-typegen": "wrangler types"
+        "cf-typegen": "wrangler types",
+        "db:generate": "drizzle-kit generate --name=migration",
+        "db:studio": "LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio",
+        "db:migrate": "wrangler d1 migrations apply mi-roulotte-db --local && wrangler d1 migrations apply mi-roulotte-db --remote"
     },
     "dependencies": {
+        "drizzle-orm": "^0.44.5",
         "hono": "^4.9.8"
     },
     "devDependencies": {
         "@types/node": "^24.5.2",
+        "drizzle-kit": "^0.31.4",
         "prettier": "^3.6.2",
         "prettier-plugin-organize-imports": "^4.3.0",
         "wrangler": "^4.39.0"

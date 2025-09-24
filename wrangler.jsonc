@@ -3,7 +3,7 @@
     "name": "mi-roulotte-api",
     "compatibility_date": "2025-06-01",
     "compatibility_flags": ["nodejs_compat"],
-    "main": "src/index.ts",
+    "main": "./src/index.ts",
     "observability": {
         "enabled": true
     },
@@ -12,7 +12,7 @@
             "binding": "DB",
             "database_name": "mi-roulotte-db",
             "database_id": "2f584243-2f1b-4425-b7d6-c0971f34f976",
-            "migrations_dir": "db/migrations"
+            "migrations_dir": "./src/db/migrations"
         }
     ],
     "r2_buckets": [

@@ -22,6 +22,23 @@
 							],
 							"path": [
 								"trips"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,description",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -33,13 +50,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/trips/{trip_id}",
+							"raw": "{{URL}}/trips/italia-2021",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"trips",
-								"{trip_id}"
+								"italia-2021"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,date,title,description",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -50,6 +74,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{URL}}/trips",
 							"host": [
@@ -57,6 +90,13 @@
 							],
 							"path": [
 								"trips"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -67,14 +107,23 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{URL}}/trips/{trip_id}",
+							"raw": "{{URL}}/trips/italia-2000",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"trips",
-								"{trip_id}"
+								"italia-2000"
 							]
 						}
 					},

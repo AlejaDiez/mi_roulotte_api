@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "9a687737-c622-4d8a-a329-07e7487c62b3",
+		"name": "Mi Roulotte API",
+		"description": "Backend API endpoints for a blog where I share our family adventures and travel experiences on the road with our caravan.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11851797"
+	},
+	"item": [
+		{
+			"name": "Trips",
+			"item": [
+				{
+					"name": "Get all trips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,description",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get trip by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips/italia-2021",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"italia-2021"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,date,title,description",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new trip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trips",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update trip",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trips/italia-2000",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"italia-2000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete trip",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints related to trips."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

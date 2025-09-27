@@ -2,10 +2,11 @@
     "exclude": ["node_modules", "build"],
     "compilerOptions": {
         "target": "ESNext",
-        "module": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
         "strict": true,
-        "verbatimModuleSyntax": true,
         "skipLibCheck": true,
+        "lib": ["ESNext"],
         "outDir": "./build",
         "types": ["./worker-configuration.d.ts", "node"],
         "paths": {

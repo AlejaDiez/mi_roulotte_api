@@ -50,13 +50,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/trips/italia-2021",
+							"raw": "{{URL}}/trips/{trip_id}",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"trips",
-								"italia-2021"
+								"{trip_id}"
 							],
 							"query": [
 								{
@@ -117,13 +117,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/trips/italia-2000",
+							"raw": "{{URL}}/trips/{trip_id}",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"trips",
-								"italia-2000"
+								"{trip_id}"
 							]
 						}
 					},
@@ -149,8 +149,181 @@
 				}
 			],
 			"description": "All endpoints related to trips."
+		},
+		{
+			"name": "Stages",
+			"item": [
+				{
+					"name": "Get all stages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}/stages",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}",
+								"stages"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,description",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stage by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}",
+								"stages",
+								"{stage_id}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,date,title,description",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new stage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}/stages",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}",
+								"stages"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update stage",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}",
+								"stages",
+								"{stage_id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete stage",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"trips",
+								"{trip_id}",
+								"stages",
+								"{stage_id}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints related to trips."
 		}
 	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{API_KEY}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",

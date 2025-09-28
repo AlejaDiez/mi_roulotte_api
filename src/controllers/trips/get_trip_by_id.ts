@@ -1,6 +1,7 @@
-import { TripsTable } from "@db/schemas";
+import { StagesTable, TripsTable } from "@db/schemas";
+import { StagePreview } from "@models/stages";
 import { Trip } from "@models/trips";
-import { canFilter, filterColumns } from "@utils/filter_object";
+import { canFilter, filterColumns, subFields } from "@utils/filter_object";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
@@ -36,8 +37,20 @@ export const getTripById: Handler = async (ctx) => {
 
     // Get satges
     if (canFilter("stages", fields)) {
-        data.stages = [];
-    }
+        const columns = {
+            name: StagesTable.name,
+            date: StagesTable.date,
+            title: StagesTable.title,
+            description: StagesTable.description,
+            image: StagesTable.image,
+            url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
+        };
+        const query = drizzle(ctx.env.DB)
+            .select(filterColumns(columns, subFields("stages", fields)))
+            .from(StagesTable)
+            .where(and(eq(StagesTable.tripId, tripId), eq(StagesTable.published, true)));
 
-    return ctx.json(Trip.partial().parse(data), 200);
+        data.stages = await query.then((e) => e.map((e) => StagePreview.parse(e)));
+    }
+    return ctx.json(Trip.parse(data), 200);
 };

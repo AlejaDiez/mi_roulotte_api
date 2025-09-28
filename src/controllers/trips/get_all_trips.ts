@@ -30,7 +30,7 @@ export const getAllTrips: Handler<{ Bindings: Env }> = async (ctx) => {
     }
 
     // Get all trips
-    const data = await query.then((e) => e.map((e) => TripPreview.partial().parse(e)));
+    const data = await query.then((e) => e.map((e) => TripPreview.parse(e)));
 
     // Get pagination info
     if (paginated) {
@@ -39,6 +39,7 @@ export const getAllTrips: Handler<{ Bindings: Env }> = async (ctx) => {
                 count: count()
             })
             .from(TripsTable)
+            .where(eq(TripsTable.published, true))
             .get()
             .then((e) => e!.count);
 

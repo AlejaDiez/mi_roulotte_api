@@ -1,17 +1,15 @@
 import z from "zod";
-import { StagePreview } from "./stages";
 
-export const Trip = z
+export const Stage = z
     .object({
         id: z.string(),
+        tripId: z.string(),
         name: z.string(),
         date: z.date(),
         title: z.string(),
         description: z.string().nullable(),
         image: z.string().nullable(),
-        video: z.string().nullable(),
         content: z.array(z.any()),
-        stages: z.array(StagePreview),
         keywords: z.array(z.string()).nullable(),
         published: z.boolean(),
         url: z.string(),
@@ -20,17 +18,16 @@ export const Trip = z
     })
     .partial();
 
-export const TripPreview = Trip.pick({
+export const StagePreview = Stage.pick({
     name: true,
     date: true,
     title: true,
     description: true,
     image: true,
-    video: true,
     url: true
 });
 
-export const InsertTrip = z.object({
+export const InsertStage = z.object({
     id: z
         .string({
             error: "must be a string"
@@ -38,6 +35,13 @@ export const InsertTrip = z.object({
         .nonempty({
             error: "must be a non-empty string"
         }),
+    // tripId: z
+    //     .string({
+    //         error: "must be a string"
+    //     })
+    //     .nonempty({
+    //         error: "must be a non-empty string"
+    //     }),
     name: z.string({
         error: "must be a string"
     }),
@@ -56,11 +60,6 @@ export const InsertTrip = z.object({
         })
         .nullish(),
     image: z.url({ error: "must be a valid url" }).nullish(),
-    video: z
-        .url({
-            error: "must be a valid url"
-        })
-        .nullish(),
     content: z
         .array(z.any(), {
             error: "must be an array"
@@ -81,7 +80,7 @@ export const InsertTrip = z.object({
         .optional()
 });
 
-export const SetTrip = z.object({
+export const SetStage = z.object({
     id: z
         .string({
             error: "must be a string"
@@ -90,6 +89,14 @@ export const SetTrip = z.object({
             error: "must be a non-empty string"
         })
         .optional(),
+    // tripId: z
+    //     .string({
+    //         error: "must be a string"
+    //     })
+    //     .nonempty({
+    //         error: "must be a non-empty string"
+    //     })
+    //     .optional(),
     name: z
         .string({
             error: "must be a string"
@@ -113,11 +120,6 @@ export const SetTrip = z.object({
         })
         .nullish(),
     image: z.url({ error: "must be a valid url" }).nullish(),
-    video: z
-        .url({
-            error: "must be a valid url"
-        })
-        .nullish(),
     content: z
         .array(z.any(), {
             error: "must be an array"

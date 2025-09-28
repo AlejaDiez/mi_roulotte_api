@@ -1,21 +1,24 @@
 import z from "zod";
+import { StagePreview } from "./stages";
 
-export const Trip = z.object({
-    id: z.string(),
-    name: z.string(),
-    date: z.date(),
-    title: z.string(),
-    description: z.string().nullable(),
-    image: z.string().nullable(),
-    video: z.string().nullable(),
-    content: z.array(z.any()),
-    stages: z.array(z.any()),
-    keywords: z.array(z.string()).nullable(),
-    published: z.boolean(),
-    url: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date().nullable()
-});
+export const Trip = z
+    .object({
+        id: z.string(),
+        name: z.string(),
+        date: z.date(),
+        title: z.string(),
+        description: z.string().nullable(),
+        image: z.string().nullable(),
+        video: z.string().nullable(),
+        content: z.array(z.any()),
+        stages: z.array(StagePreview),
+        keywords: z.array(z.string()).nullable(),
+        published: z.boolean(),
+        url: z.string(),
+        createdAt: z.date(),
+        updatedAt: z.date().nullable()
+    })
+    .partial();
 
 export const TripPreview = Trip.pick({
     name: true,

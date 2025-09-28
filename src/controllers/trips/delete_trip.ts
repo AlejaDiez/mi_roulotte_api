@@ -10,7 +10,6 @@ export const deleteTrip: Handler = async (ctx) => {
         .delete(TripsTable)
         .where(eq(TripsTable.id, tripId))
         .returning({ id: TripsTable.id });
-
     // Delete trip
     const data = await query.get();
 

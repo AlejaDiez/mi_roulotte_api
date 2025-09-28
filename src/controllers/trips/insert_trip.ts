@@ -1,6 +1,6 @@
 import { TripsTable } from "@db/schemas";
-import { InsertTrip } from "@models/trips";
-import { filterColumns } from "@utils/filter_object";
+import { InsertTrip, Trip } from "@models/trips";
+import { canFilter, filterColumns } from "@utils/filter_object";
 import { DrizzleQueryError, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
@@ -35,7 +35,10 @@ export const insertTrip: Handler = async (ctx) => {
         // Insert trip
         const data: any = await query.get();
 
-        return ctx.json(data, 201);
+        if (canFilter("stages", fields)) {
+            data.stages = [];
+        }
+        return ctx.json(Trip.parse(data), 201);
     } catch (err) {
         if (err instanceof ZodError)
             throw new HTTPException(422, {

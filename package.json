@@ -25,6 +25,7 @@
     "dependencies": {
         "drizzle-orm": "^0.44.5",
         "hono": "^4.9.8",
+        "resend": "^6.1.0",
         "zod": "^4.1.11"
     },
     "devDependencies": {

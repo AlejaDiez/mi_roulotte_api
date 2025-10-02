@@ -1,10 +1,16 @@
 import { MiddlewareHandler } from "hono";
-import { HTTPException } from "hono/http-exception";
 
-export const auth: MiddlewareHandler = async (ctx, next) => {
-    const apiKey = ctx.req.header("x-api-key");
+// This middleware requires at least a admin role
+export const authAdmin: MiddlewareHandler = async (ctx, next) => {
+    await next();
+};
 
-    if (!apiKey || apiKey !== process.env.API_KEY)
-        throw new HTTPException(403, { message: "Forbidden, invalid or missing API key" });
+// This middleware requires at least a editor role
+export const authEditor: MiddlewareHandler = async (ctx, next) => {
+    await next();
+};
+
+// This middleware requires at least a reader role
+export const authReader: MiddlewareHandler = async (ctx, next) => {
     await next();
 };

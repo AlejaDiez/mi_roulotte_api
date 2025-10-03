@@ -7,7 +7,7 @@ import { HTTPException } from "hono/http-exception";
 import type { Handler } from "hono/types";
 import { ZodError } from "zod";
 
-export const insertTrip: Handler = async (ctx) => {
+export const insertTrip: Handler<{ Bindings: Env }> = async (ctx) => {
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {
         id: TripsTable.id,
@@ -20,7 +20,7 @@ export const insertTrip: Handler = async (ctx) => {
         content: TripsTable.content,
         keywords: TripsTable.keywords,
         published: TripsTable.published,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${TripsTable.id})`,
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`,
         createdAt: TripsTable.createdAt,
         updatedAt: TripsTable.updatedAt
     };

@@ -12,6 +12,7 @@
         "paths": {
             "@controllers/*": ["./src/controllers/*"],
             "@db/*": ["./src/db/*"],
+            "@emails/*": ["./src/emails/*"],
             "@middlewares/*": ["./src/middlewares/*"],
             "@models/*": ["./src/models/*"],
             "@routes/*": ["./src/routes/*"],

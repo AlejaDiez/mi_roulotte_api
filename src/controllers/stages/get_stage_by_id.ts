@@ -6,7 +6,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import type { Handler } from "hono/types";
 
-export const getStageById: Handler = async (ctx, next) => {
+export const getStageById: Handler<{ Bindings: Env }> = async (ctx, next) => {
     const tripId = ctx.req.param("trip_id");
     const stageId = ctx.req.param("stage_id");
     const fields = ctx.req.query("fields")?.split(",");
@@ -21,7 +21,7 @@ export const getStageById: Handler = async (ctx, next) => {
         content: StagesTable.content,
         keywords: StagesTable.keywords,
         published: StagesTable.published,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
         createdAt: StagesTable.createdAt,
         updatedAt: StagesTable.updatedAt
     };

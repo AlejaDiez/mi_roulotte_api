@@ -25,9 +25,10 @@
         "binding": "IMAGES"
     },
     "vars": {
-        "API_HOST": "api.miroulotte.es",
-        "CDN_HOST": "cdn.miroulotte.es",
-        "HOST": "miroulotte.es"
+        "API_HOST": "https://api.miroulotte.es",
+        "CDN_HOST": "https://cdn.miroulotte.es",
+        "HOST": "https://miroulotte.es",
+        "STUDIO_HOST": "https://studio.miroulotte.es"
     }
     // "routes": [
     //     {

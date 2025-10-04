@@ -30,22 +30,15 @@ export const validateToken = async (
 };
 
 export const generateHash = (length: number = 6): string => {
-    const chars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    return Array.from(
-        { length },
-        () => chars[Math.floor(Math.random() * chars.length)]
-    ).join("");
+    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 };
 
 export const hash = async (data: string): Promise<string> => {
     return await bcryptjs.hash(data, 12);
 };
 
-export const compareHash = async (
-    data: string,
-    encrypted: string
-): Promise<boolean> => {
+export const compareHash = async (data: string, encrypted: string): Promise<boolean> => {
     return await bcryptjs.compare(data, encrypted);
 };

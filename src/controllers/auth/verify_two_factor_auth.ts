@@ -6,7 +6,7 @@ import { getConnInfo } from "hono/cloudflare-workers";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
-export const verifyTwoFactorAuth: Handler<{ Bindings: Env }> = async (ctx) => {
+export const verifyTwoFactorAuth: Handler<Env> = async (ctx) => {
     const body = await ctx.req.json();
     const data = await validateToken(body.token, ctx.env.VERIFY_2FA_SECRET);
 

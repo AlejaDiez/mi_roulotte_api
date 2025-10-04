@@ -5,9 +5,9 @@ import { canFilter, filterColumns, subFields } from "@utils/filter_object";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const getTripById: Handler<{ Bindings: Env }> = async (ctx) => {
+export const getTripById: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {

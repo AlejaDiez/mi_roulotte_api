@@ -5,7 +5,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
-export const verifyEmail: Handler<{ Bindings: Env }> = async (ctx) => {
+export const verifyEmail: Handler<Env> = async (ctx) => {
     const { token } = await ctx.req.json();
 
     if (!token) throw new HTTPException(422, { message: "Token is required" });

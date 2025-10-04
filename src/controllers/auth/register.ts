@@ -39,17 +39,16 @@ export const register: Handler<{ Bindings: Env }> = async (ctx) => {
         const data: any = await query.get();
 
         // Send verification email
-        const resend = new Resend(ctx.env.EMAIL_TOKEN);
         const token = await generateToken(
             { id: data.id },
             ctx.env.VERIFY_EMAIL_SECRET,
             60 * 30 // 30 mins
         );
 
-        await resend.emails.send({
+        await new Resend(ctx.env.EMAIL_TOKEN).emails.send({
             from: "Mi Roulotte <no-reply@miroulotte.es>",
             to: [data.email],
-            subject: "Verify your email",
+            subject: "Activate Your Account",
             html: verifyEmailTemplate({
                 username: data.username,
                 url: `${ctx.env.STUDIO_HOST}/verify-email?token=${token}`

@@ -9,11 +9,10 @@ export default ({ username, url }: Props) => {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Welcome to Mi Roulotte</title>
-        <link rel="preload" as="image" href="https://miroulotte.es/favicon.svg" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-            rel="stylesheet" />
+        <title>Activate Your Account - Mi Roulotte</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     </head>
     <body
         style="

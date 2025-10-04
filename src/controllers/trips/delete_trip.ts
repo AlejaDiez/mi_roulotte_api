@@ -2,9 +2,9 @@ import { TripsTable } from "@db/schemas";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const deleteTrip: Handler = async (ctx) => {
+export const deleteTrip: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
     const query = drizzle(ctx.env.DB)
         .delete(TripsTable)

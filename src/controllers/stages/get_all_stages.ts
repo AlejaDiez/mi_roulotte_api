@@ -4,9 +4,9 @@ import { filterColumns } from "@utils/filter_object";
 import { and, count, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const getAllStages: Handler<{ Bindings: Env }> = async (ctx) => {
+export const getAllStages: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
     const fields = ctx.req.query("fields")?.split(",");
     const page = ctx.req.query("page") ? Number(ctx.req.query("page")) : undefined;
@@ -18,7 +18,7 @@ export const getAllStages: Handler<{ Bindings: Env }> = async (ctx) => {
         title: StagesTable.title,
         description: StagesTable.description,
         image: StagesTable.image,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
     };
 
     // Trip exists?

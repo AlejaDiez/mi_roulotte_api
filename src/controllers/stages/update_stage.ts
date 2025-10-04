@@ -4,10 +4,10 @@ import { filterColumns } from "@utils/filter_object";
 import { and, DrizzleQueryError, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 import { ZodError } from "zod";
 
-export const updateStage: Handler = async (ctx) => {
+export const updateStage: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
     const stageId = ctx.req.param("stage_id");
     const fields = ctx.req.query("fields")?.split(",");
@@ -22,7 +22,7 @@ export const updateStage: Handler = async (ctx) => {
         content: StagesTable.content,
         keywords: StagesTable.keywords,
         published: StagesTable.published,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
         createdAt: StagesTable.createdAt,
         updatedAt: StagesTable.updatedAt
     };

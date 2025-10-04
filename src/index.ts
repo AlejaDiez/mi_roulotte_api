@@ -1,14 +1,11 @@
-import { auth } from "@middlewares/auth";
+import authRoutes from "@routes/auth";
 import stagesRoutes from "@routes/stages";
 import tripsRoutes from "@routes/trips";
 import { Hono } from "hono";
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono<Env>();
 
-// Define middlewares
-app.use("*", auth);
-
-// Define routes
+app.route("/auth", authRoutes);
 app.route("/trips", tripsRoutes);
 app.route("/trips/:trip_id/stages", stagesRoutes);
 

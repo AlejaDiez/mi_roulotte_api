@@ -3,9 +3,9 @@ import { TripPreview } from "@models/trips";
 import { filterColumns } from "@utils/filter_object";
 import { count, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const getAllTrips: Handler<{ Bindings: Env }> = async (ctx) => {
+export const getAllTrips: Handler<Env> = async (ctx) => {
     const fields = ctx.req.query("fields")?.split(",");
     const page = ctx.req.query("page") ? Number(ctx.req.query("page")) : undefined;
     const limit = ctx.req.query("limit") ? Number(ctx.req.query("limit")) : undefined;
@@ -17,7 +17,7 @@ export const getAllTrips: Handler<{ Bindings: Env }> = async (ctx) => {
         description: TripsTable.description,
         image: TripsTable.image,
         video: TripsTable.video,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${TripsTable.id})`
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`
     };
     const query = drizzle(ctx.env.DB)
         .select(filterColumns(columns, fields))

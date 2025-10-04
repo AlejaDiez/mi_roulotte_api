@@ -1,363 +1,650 @@
 {
-	"info": {
-		"_postman_id": "9a687737-c622-4d8a-a329-07e7487c62b3",
-		"name": "Mi Roulotte API",
-		"description": "Backend API endpoints for a blog where I share our family adventures and travel experiences on the road with our caravan.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "11851797"
-	},
-	"item": [
-		{
-			"name": "Trips",
-			"item": [
-				{
-					"name": "Get all trips",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "name,description",
-									"disabled": true
-								},
-								{
-									"key": "page",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "limit",
-									"value": "1",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get trip by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "name,date,title,description,stages.title",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create new trip",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/trips",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update trip",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete trip",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"description": "All endpoints related to trips."
-		},
-		{
-			"name": "Stages",
-			"item": [
-				{
-					"name": "Get all stages",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}/stages",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}",
-								"stages"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "name,description",
-									"disabled": true
-								},
-								{
-									"key": "page",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "limit",
-									"value": "1",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get stage by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}",
-								"stages",
-								"{stage_id}"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "name,date,title,description",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create new stage",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}/stages",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}",
-								"stages"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update stage",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}",
-								"stages",
-								"{stage_id}"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete stage",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"trips",
-								"{trip_id}",
-								"stages",
-								"{stage_id}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"description": "All endpoints related to trips."
-		}
-	],
-	"auth": {
-		"type": "apikey",
-		"apikey": [
-			{
-				"key": "value",
-				"value": "{{API_KEY}}",
-				"type": "string"
-			},
-			{
-				"key": "key",
-				"value": "x-api-key",
-				"type": "string"
-			},
-			{
-				"key": "in",
-				"value": "header",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
-		}
-	]
+    "info": {
+        "_postman_id": "9a687737-c622-4d8a-a329-07e7487c62b3",
+        "name": "Mi Roulotte API",
+        "description": "Backend API endpoints for a blog where I share our family adventures and travel experiences on the road with our caravan.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "11851797"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"1234ABcd\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/login",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "login"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Register",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"test\",\n    \"email\": \"test@example.com\",\n    \"password\": \"1234ABcd\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/register",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "register"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/auth/logout",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "logout"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Refresh",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "const { token, refreshToken } = pm.response.json();",
+                                    "",
+                                    "pm.environment.set(\"TOKEN\", token);",
+                                    "pm.environment.set(\"REFRESH_TOKEN\", refreshToken);",
+                                    ""
+                                ],
+                                "type": "text/javascript",
+                                "packages": {},
+                                "requests": {}
+                            }
+                        }
+                    ],
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"token\": \"{{REFRESH_TOKEN}}\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/refresh",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "refresh"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get profile",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/auth/profile",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "profile"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Edit profile",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    // \"username\"?: \"test\",\n    // \"password\"?: \"1234ABcd\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/profile",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "profile"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Verify email",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"token\": \"verification_email_token\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/verify-email",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "verify-email"]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Verify two factor auth",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"code\": \"123456\",\n    \"token\": \"two_factor_auth_token\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/auth/verify-two-factor-auth",
+                            "host": ["{{URL}}"],
+                            "path": ["auth", "verify-two-factor-auth"]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "description": "All endpoints related to auth.",
+            "auth": {
+                "type": "noauth"
+            },
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Trips",
+            "item": [
+                {
+                    "name": "Get all trips",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips",
+                            "host": ["{{URL}}"],
+                            "path": ["trips"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": "name,description",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get trip by id",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": "name,date,title,description,stages.title",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create new trip",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/trips",
+                            "host": ["{{URL}}"],
+                            "path": ["trips"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": "",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update trip",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": null,
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete trip",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}"]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "description": "All endpoints related to trips.",
+            "auth": {
+                "type": "noauth"
+            },
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Stages",
+            "item": [
+                {
+                    "name": "Get all stages",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}/stages",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}", "stages"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": "name,description",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get stage by id",
+                    "request": {
+                        "auth": {
+                            "type": "noauth"
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}", "stages", "{stage_id}"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": "name,date,title,description",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create new stage",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    // \"id\": \"\",\n    // \"name\": \"\",\n    // \"date\": \"yyyy-mm-dd\",\n    // \"title\": \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}/stages",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}", "stages"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": null,
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update stage",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    // \"id\"?: \"\",\n    // \"name\"?: \"\",\n    // \"date\"?: \"yyyy-mm-dd\",\n    // \"title\"?: \"\",\n    // \"description\"?: \"\" | null,\n    // \"image\"?: \"\" | null,\n    // \"video\"?: \"\" | null,\n    // \"content\"?: [],\n    // \"keywords\"?: [] | null,\n    // \"published\"?: true | false\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}", "stages", "{stage_id}"],
+                            "query": [
+                                {
+                                    "key": "fields",
+                                    "value": null,
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete stage",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/trips/{trip_id}/stages/{stage_id}",
+                            "host": ["{{URL}}"],
+                            "path": ["trips", "{trip_id}", "stages", "{stage_id}"]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "description": "All endpoints related to stages.",
+            "auth": {
+                "type": "noauth"
+            },
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {},
+                        "exec": [""]
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "requests": {},
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "requests": {},
+                "exec": [""]
+            }
+        }
+    ]
 }

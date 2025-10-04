@@ -5,14 +5,15 @@ import {
     insertStage,
     updateStage
 } from "@controllers/stages";
+import { authEditor } from "@middlewares/auth";
 import { Hono } from "hono";
 
 const router = new Hono();
 
 router.get("/", getAllStages);
 router.get("/:stage_id", getStageById);
-router.post("/", insertStage);
-router.put("/:stage_id", updateStage);
-router.delete("/:stage_id", deleteStage);
+router.post("/", authEditor, insertStage);
+router.put("/:stage_id", authEditor, updateStage);
+router.delete("/:stage_id", authEditor, deleteStage);
 
 export default router;

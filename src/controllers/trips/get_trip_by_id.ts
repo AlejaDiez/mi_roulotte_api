@@ -5,9 +5,9 @@ import { canFilter, filterColumns, subFields } from "@utils/filter_object";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const getTripById: Handler = async (ctx) => {
+export const getTripById: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {
@@ -21,7 +21,7 @@ export const getTripById: Handler = async (ctx) => {
         content: TripsTable.content,
         keywords: TripsTable.keywords,
         published: TripsTable.published,
-        url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${TripsTable.id})`,
+        url: sql`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`,
         createdAt: TripsTable.createdAt,
         updatedAt: TripsTable.updatedAt
     };
@@ -43,7 +43,7 @@ export const getTripById: Handler = async (ctx) => {
             title: StagesTable.title,
             description: StagesTable.description,
             image: StagesTable.image,
-            url: sql`CONCAT('https://', ${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
+            url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
         };
         const query = drizzle(ctx.env.DB)
             .select(filterColumns(columns, subFields("stages", fields)))

@@ -12,7 +12,7 @@ export const Stage = z
         content: z.array(z.any()),
         keywords: z.array(z.string()).nullable(),
         published: z.boolean(),
-        url: z.string(),
+        url: z.url(),
         createdAt: z.date(),
         updatedAt: z.date().nullable()
     })

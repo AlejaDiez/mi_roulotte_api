@@ -11,7 +11,7 @@ export const refresh: Handler<Env> = async (ctx) => {
     const data = await validateToken(body.token, ctx.env.REFRESH_AUTH_SECRET);
 
     // Validate token
-    if (!data) if (!data) throw new HTTPException(401, { message: "Invalid or expired token" });
+    if (!data) throw new HTTPException(401, { message: "Invalid or expired token" });
 
     // Validate if session exists and rotated token matches the one in the database
     const query = drizzle(ctx.env.DB)
@@ -27,9 +27,18 @@ export const refresh: Handler<Env> = async (ctx) => {
         );
     let sessionData: any = await query.get();
 
-    if (!sessionData)
-        throw new HTTPException(404, {
-            message: "Session not found, please login again to obtain a new token"
+    if (!sessionData) throw new HTTPException(401, { message: "Invalid or expired session" });
+
+    // Get user
+    const userQuery = drizzle(ctx.env.DB)
+        .select({ id: UsersTable.id, username: UsersTable.username, role: UsersTable.role })
+        .from(UsersTable)
+        .where(and(eq(UsersTable.id, sessionData.uid), eq(UsersTable.isActive, true)));
+    const userData = (await userQuery.get())!;
+
+    if (!userData)
+        throw new HTTPException(403, {
+            message: "Your account has been disabled"
         });
 
     // Update rotated token and return new access token
@@ -50,11 +59,6 @@ export const refresh: Handler<Env> = async (ctx) => {
     sessionData = await sessionQuery.get();
 
     // Create tokens
-    const userQuery = drizzle(ctx.env.DB)
-        .select({ id: UsersTable.id, username: UsersTable.username, role: UsersTable.role })
-        .from(UsersTable)
-        .where(eq(UsersTable.id, sessionData.uid));
-    const userData = (await userQuery.get())!;
     const token = await generateToken(
         {
             id: userData.id,

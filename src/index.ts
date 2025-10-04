@@ -3,7 +3,7 @@ import stagesRoutes from "@routes/stages";
 import tripsRoutes from "@routes/trips";
 import { Hono } from "hono";
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono<Env>();
 
 app.route("/auth", authRoutes);
 app.route("/trips", tripsRoutes);

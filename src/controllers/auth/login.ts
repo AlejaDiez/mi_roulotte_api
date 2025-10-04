@@ -10,7 +10,7 @@ import { Handler } from "hono/types";
 import { Resend } from "resend";
 import { ZodError } from "zod";
 
-export const login: Handler<{ Bindings: Env }> = async (ctx) => {
+export const login: Handler<Env> = async (ctx) => {
     const columns = {
         id: UsersTable.id,
         username: UsersTable.username,

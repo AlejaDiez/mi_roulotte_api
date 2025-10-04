@@ -6,7 +6,7 @@ import { getConnInfo } from "hono/cloudflare-workers";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
-export const refresh: Handler<{ Bindings: Env }> = async (ctx) => {
+export const refresh: Handler<Env> = async (ctx) => {
     const body = await ctx.req.json();
     const data = await validateToken(body.token, ctx.env.REFRESH_AUTH_SECRET);
 

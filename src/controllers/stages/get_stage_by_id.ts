@@ -4,9 +4,9 @@ import { filterColumns } from "@utils/filter_object";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
-import type { Handler } from "hono/types";
+import { Handler } from "hono/types";
 
-export const getStageById: Handler<{ Bindings: Env }> = async (ctx, next) => {
+export const getStageById: Handler<Env> = async (ctx, next) => {
     const tripId = ctx.req.param("trip_id");
     const stageId = ctx.req.param("stage_id");
     const fields = ctx.req.query("fields")?.split(",");

@@ -14,7 +14,7 @@
     "scripts": {
         "dev": "dotenv -- wrangler dev --port 3010",
         "deploy": "wrangler deploy --minify",
-        "cf-typegen": "dotenv -- wrangler types",
+        "cf-typegen": "dotenv -- wrangler types --env-interface=Bindings",
         "db:generate": "drizzle-kit generate --name=migration",
         "db:studio:local": "LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio",
         "db:studio:remote": "source .env && drizzle-kit studio",

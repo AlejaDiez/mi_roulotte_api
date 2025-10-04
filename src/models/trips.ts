@@ -14,7 +14,7 @@ export const Trip = z
         stages: z.array(StagePreview),
         keywords: z.array(z.string()).nullable(),
         published: z.boolean(),
-        url: z.string(),
+        url: z.url(),
         createdAt: z.date(),
         updatedAt: z.date().nullable()
     })

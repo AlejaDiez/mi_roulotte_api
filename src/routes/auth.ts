@@ -15,7 +15,7 @@ const router = new Hono();
 
 router.post("/login", login);
 router.post("/register", register);
-router.post("/logout", authReader, logout);
+router.delete("/logout", authReader, logout);
 router.post("/refresh", refresh);
 router.get("/profile", authReader, getProfile);
 router.put("/profile", authReader, editProfile);

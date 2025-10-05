@@ -1,4 +1,25 @@
 import { sql } from "drizzle-orm";
+import { _ZodType, core, util, z } from "zod";
+
+declare module "zod" {
+    interface ZodObject<
+        /** @ts-ignore Cast variance */
+        out Shape extends core.$ZodShape = core.$ZodLooseShape,
+        out Config extends core.$ZodObjectConfig = core.$strip
+    > extends _ZodType<core.$ZodObjectInternals<Shape, Config>>,
+            core.$ZodObject<Shape, Config> {
+        filter<M extends string[]>(
+            fields?: M
+        ): ZodObject<util.Flatten<Pick<Shape, Extract<keyof Shape, keyof M>>>, Config>;
+    }
+}
+
+z.ZodObject.prototype.filter = function (fields?: string[]) {
+    const shape = this.shape;
+    const keys = fields?.filter((k) => k in shape) ?? Object.keys(shape);
+    const shapeSubset = Object.fromEntries(keys.map((k) => [k, shape[k]]));
+    return z.object(shapeSubset);
+};
 
 export const canFilter = (field: string, fields: string[] | undefined) =>
     fields?.some((e) => e.includes(field)) ?? true;
@@ -23,22 +44,4 @@ export const filterColumns = <T extends object>(columns: T, fields: string[] | u
         return { _: sql`'_'` };
     }
     return cols;
-};
-
-export const filterObject = <T extends object>(
-    obj: T,
-    fields: string[] | undefined
-): Partial<T> => {
-    if (!fields || fields.length === 0) {
-        return { ...obj };
-    }
-
-    const result: Partial<T> = {};
-
-    for (const key of fields) {
-        if (key in obj) {
-            result[key as keyof T] = obj[key as keyof T];
-        }
-    }
-    return result;
 };

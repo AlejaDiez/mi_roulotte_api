@@ -24,34 +24,38 @@ export const ExtensionTypes: Record<string, string> = {
 export const File = z
     .object({
         name: z.string(),
-        type: z.enum([...ImageTypes, ...AudioTypes, ...VideoTypes, ...DocumentTypes]),
+        type: z.enum(Object.keys(ExtensionTypes)),
         size: z.number().int(),
         url: z.url(),
         uploadedAt: z.date()
     })
     .partial();
 
-export const UploadFileProps = z.object({
-    width: z
+export const TransformFileProps = z.object({
+    width: z.coerce
         .number({
             error: "width must be a number"
         })
         .int("width must be an integer")
         .positive("width must be a positive number")
         .optional(),
-    height: z
+    height: z.coerce
         .number({
             error: "height must be a number"
         })
         .int("height must be an integer")
         .positive("height must be a positive number")
         .optional(),
-    rotate: z
-        .union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)], {
+    rotate: z.coerce
+        .number({
+            error: "rotate must be a number"
+        })
+        .int("rotate must be an integer")
+        .refine((val) => [0, 90, 180, 270].includes(val), {
             message: "rotate must be one of 0, 90, 180, 270"
         })
         .optional(),
-    quality: z
+    quality: z.coerce
         .number({
             error: "quality must be a number"
         })

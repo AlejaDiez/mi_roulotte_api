@@ -1,6 +1,10 @@
-import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
 export const deleteFile: Handler<Env> = async (ctx) => {
-    throw new HTTPException(501, { message: "This feature is not implemented yet" });
+    const { type, name } = ctx.req.param();
+    const query = ctx.env.BUCKET.delete(`${type}/${name}`);
+
+    // Delete file
+    await query;
+    return ctx.body(null, 204);
 };

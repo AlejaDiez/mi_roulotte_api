@@ -1,6 +1,6 @@
 {
     "name": "mi_roulotte_api",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Backend API for a blog where I share our family adventures and travel experiences on the road with our caravan.",
     "homepage": "https://api.miroulotte.es",
     "repository": {

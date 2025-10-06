@@ -1,5 +1,5 @@
 import { StagesTable, TripsTable } from "@db/schemas";
-import { SetStage, Stage } from "@models/stages";
+import { Stage, UpdateStage } from "@models/stages";
 import { filterColumns } from "@utils/filter_object";
 import { and, DrizzleQueryError, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
@@ -38,7 +38,7 @@ export const updateStage: Handler<Env> = async (ctx) => {
         throw new HTTPException(404, { message: `Trip with id '${tripId}' not found` });
 
     try {
-        const body = SetStage.parse(await ctx.req.json());
+        const body = UpdateStage.parse(await ctx.req.json());
         const query = drizzle(ctx.env.DB)
             .update(StagesTable)
             .set(body)

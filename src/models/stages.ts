@@ -1,4 +1,5 @@
 import z from "zod";
+import { Comment } from "./comments";
 
 export const Stage = z
     .object({
@@ -12,6 +13,8 @@ export const Stage = z
         content: z.array(z.any()),
         keywords: z.array(z.string()).nullable(),
         published: z.boolean(),
+        allowComments: z.boolean(),
+        comments: z.array(Comment),
         url: z.url(),
         createdAt: z.date(),
         updatedAt: z.date().nullable()
@@ -80,7 +83,7 @@ export const InsertStage = z.object({
         .optional()
 });
 
-export const SetStage = z.object({
+export const UpdateStage = z.object({
     id: z
         .string({
             error: "must be a string"

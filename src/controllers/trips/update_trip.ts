@@ -1,6 +1,6 @@
 import { StagesTable, TripsTable } from "@db/schemas";
 import { StagePreview } from "@models/stages";
-import { SetTrip, Trip } from "@models/trips";
+import { Trip, UpdateTrip } from "@models/trips";
 import { canFilter, filterColumns, subFields } from "@utils/filter_object";
 import { and, DrizzleQueryError, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
@@ -28,7 +28,7 @@ export const updateTrip: Handler<Env> = async (ctx) => {
     };
 
     try {
-        const body = SetTrip.parse(await ctx.req.json());
+        const body = UpdateTrip.parse(await ctx.req.json());
         const query = drizzle(ctx.env.DB)
             .update(TripsTable)
             .set(body)

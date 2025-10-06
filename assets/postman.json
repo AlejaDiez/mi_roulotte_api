@@ -349,6 +349,235 @@
 			]
 		},
 		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Get all comments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "username,content",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comment by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/comments/{comment_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments",
+								"{comment_id}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "username,content",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new comment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"tripId\": \"\",\n    // \"stageId\"?: \"\" | null,\n    // \"username\": \"\",\n    // \"email\"?: \"\" | null,\n    // \"content\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/comments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "username,content",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reply to comment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"username\": \"\",\n    // \"email\"?: \"\" | null,\n    // \"content\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/comments/{comment_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments",
+								"{comment_id}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "username,content",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/comments/{comment_id}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments",
+								"{comment_id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsubscribe notifications",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{TOKEN}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/comments/unsubscribe-notifications",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"comments",
+								"unsubscribe-notifications"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints related to comments.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Files",
 			"item": [
 				{
@@ -401,14 +630,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/files/{type}/{name}",
+							"raw": "{{URL}}/files/images/PXL_20250622_111047130_RbFsZJ.jpg",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"files",
-								"{type}",
-								"{name}"
+								"images",
+								"PXL_20250622_111047130_RbFsZJ.jpg"
 							],
 							"query": [
 								{

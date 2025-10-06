@@ -20,6 +20,7 @@ export const StagesTable = table(
         content: text("content", { mode: "json" }).notNull(),
         keywords: text("keywords", { mode: "json" }),
         published: integer("published", { mode: "boolean" }).notNull().default(false),
+        allowComments: integer("allow_comments", { mode: "boolean" }).notNull().default(false),
         createdAt: integer("created_at", { mode: "timestamp" })
             .notNull()
             .default(sql`(unixepoch())`),

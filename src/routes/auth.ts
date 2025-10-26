@@ -13,13 +13,13 @@ import { Hono } from "hono";
 
 const router = new Hono();
 
-router.post("/login", login);
 router.post("/register", register);
-router.delete("/logout", authReader, logout);
+router.post("/verify-email", verifyEmail);
+router.post("/login", login);
 router.post("/refresh", refresh);
+router.post("/verify-two-factor-auth", verifyTwoFactorAuth);
 router.get("/profile", authReader, getProfile);
 router.put("/profile", authReader, editProfile);
-router.post("/verify-email", verifyEmail);
-router.post("/verify-two-factor-auth", verifyTwoFactorAuth);
+router.delete("/logout", authReader, logout);
 
 export default router;

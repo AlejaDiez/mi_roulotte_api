@@ -9,7 +9,7 @@ export const Comment = z
         email: z.email().nullable(),
         content: z.string(),
         repliedTo: z.string().nullable(),
-        replies: z.array(z.object()),
+        replies: z.array(z.any()),
         url: z.url(),
         userAgent: z.string().nullable(),
         ipAddress: z.string().nullable(),
@@ -21,6 +21,12 @@ export const Comment = z
 export const InsertComment = z.object({
     tripId: z.string(),
     stageId: z.string().nullish(),
+    username: z.string(),
+    email: z.email().nullish(),
+    content: z.string()
+});
+
+export const ReplyComment = z.object({
     username: z.string(),
     email: z.email().nullish(),
     content: z.string()

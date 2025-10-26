@@ -18,6 +18,7 @@ z.ZodObject.prototype.filter = function (fields?: string[]) {
     const shape = this.shape;
     const keys = fields?.filter((k) => k in shape) ?? Object.keys(shape);
     const shapeSubset = Object.fromEntries(keys.map((k) => [k, shape[k]]));
+
     return z.object(shapeSubset);
 };
 

@@ -18,7 +18,7 @@ export const getAllStages: Handler<Env> = async (ctx) => {
         title: StagesTable.title,
         description: StagesTable.description,
         image: StagesTable.image,
-        url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
+        url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
     };
 
     // Trip exists?

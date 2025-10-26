@@ -187,7 +187,7 @@ export default ({ username, code }: Props) => {
                                     letter-spacing: 1.6px;
                                     color: #a8a8a8;
                                 ">
-                                This code will expire in 7 minutes. If you didn't request this
+                                This code will expire in 7 minutes. If you didn’t request this
                                 code, you can safely ignore this email.
                             </td>
                         </tr>

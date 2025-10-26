@@ -1,18 +1,24 @@
 interface Props {
     username: string;
+    post: string;
+    originalComment: string;
+    replySnippet: string;
     url: string;
+    unsubscribeUrl: string;
 }
 
-export default ({ username, url }: Props) => {
+export default ({ username, post, originalComment, replySnippet, url, unsubscribeUrl }: Props) => {
     return `<!doctype html>
 <html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Activate Your Account - Mi Roulotte</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <title>New Reply to Your Comment - Mi Roulotte</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:wght@600&display=swap"
+            rel="stylesheet" />
     </head>
     <body
         style="
@@ -41,7 +47,7 @@ export default ({ username, url }: Props) => {
                                         color: #161616;
                                         font-weight: 700;
                                     ">
-                                    Welcome to Mi Roulotte
+                                    New Reply to Your Comment
                                 </h1>
                             </td>
                         </tr>
@@ -67,9 +73,48 @@ export default ({ username, url }: Props) => {
                                     line-height: 24px;
                                     color: #525252;
                                 ">
-                                Thank you for signing up for
-                                <strong style="font-weight: 600">Mi Roulotte</strong>. To activate
-                                your account and get started, please click the button below:
+                                Someone has replied to your comment on
+                                <strong style="font-weight: 600">“${post}”</strong>:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                align="left"
+                                style="
+                                    padding: 24px 0 8px 0;
+                                    font-size: 16px;
+                                    line-height: 24px;
+                                    color: #525252;
+                                ">
+                                <div
+                                    style="
+                                        padding: 0.5rem 1rem;
+                                        border-left: 1px solid #a8a8a8;
+                                        background: #f4f4f4;
+                                    ">
+                                    <strong style="font-weight: 600">Your comment:</strong><br />
+                                    <em>${originalComment}</em>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                align="left"
+                                style="
+                                    padding: 0 0 40px 0;
+                                    font-size: 16px;
+                                    line-height: 24px;
+                                    color: #525252;
+                                ">
+                                <div
+                                    style="
+                                        padding: 0.5rem 1rem;
+                                        border-left: 1px solid #a8a8a8;
+                                        background: #f4f4f4;
+                                    ">
+                                    <strong style="font-weight: 600">Your reply:</strong><br />
+                                    <em>${replySnippet}</em>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -85,7 +130,7 @@ export default ({ username, url }: Props) => {
                                         color: #ffffff;
                                         text-decoration: none;
                                     ">
-                                    Verify account
+                                    View Comment
                                 </a>
                             </td>
                         </tr>
@@ -100,9 +145,14 @@ export default ({ username, url }: Props) => {
                                     letter-spacing: 1.6px;
                                     color: #a8a8a8;
                                 ">
-                                If you didn’t create this account, you can safely ignore this email.
-                                The registration will not be completed unless the activation link is
-                                used.
+                                You’re receiving this email because you subscribed to comment
+                                notifications on Mi Roulotte. If you no longer wish to receive these
+                                notifications, you can
+                                <a
+                                    href="${unsubscribeUrl}"
+                                    style="color: currentColor; text-decoration: underline">
+                                    unsubscribe here</a
+                                >.
                             </td>
                         </tr>
                     </table>

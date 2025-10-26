@@ -21,7 +21,7 @@ export const insertStage: Handler<Env> = async (ctx) => {
         content: StagesTable.content,
         keywords: StagesTable.keywords,
         published: StagesTable.published,
-        url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
+        url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`,
         createdAt: StagesTable.createdAt,
         updatedAt: StagesTable.updatedAt
     };

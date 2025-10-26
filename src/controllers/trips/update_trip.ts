@@ -22,7 +22,7 @@ export const updateTrip: Handler<Env> = async (ctx) => {
         content: TripsTable.content,
         keywords: TripsTable.keywords,
         published: TripsTable.published,
-        url: sql`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`,
+        url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`,
         createdAt: TripsTable.createdAt,
         updatedAt: TripsTable.updatedAt
     };
@@ -47,7 +47,7 @@ export const updateTrip: Handler<Env> = async (ctx) => {
                 title: StagesTable.title,
                 description: StagesTable.description,
                 image: StagesTable.image,
-                url: sql`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
+                url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
             };
             const query = drizzle(ctx.env.DB)
                 .select(filterColumns(columns, subFields("stages", fields)))

@@ -5,8 +5,8 @@ import { Hono } from "hono";
 const router = new Hono();
 
 router.get("/", authEditor, getAllFiles);
-router.get("/:type/:name", authEditor, getFileById);
 router.post("/", authEditor, uploadFile);
+router.get("/:type/:name", authEditor, getFileById);
 router.delete("/:type/:name", authEditor, deleteFile);
 
 export default router;

@@ -17,7 +17,7 @@ export const getAllTrips: Handler<Env> = async (ctx) => {
         description: TripsTable.description,
         image: TripsTable.image,
         video: TripsTable.video,
-        url: sql`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`
+        url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`
     };
     const query = drizzle(ctx.env.DB)
         .select(filterColumns(columns, fields))

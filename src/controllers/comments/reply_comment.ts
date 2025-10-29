@@ -13,8 +13,6 @@ import { Resend } from "resend";
 import { ZodError } from "zod";
 
 export const replyComment: Handler<Env> = async (ctx) => {
-    console.log("add");
-
     const parentCommentId = ctx.req.param("comment_id");
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {

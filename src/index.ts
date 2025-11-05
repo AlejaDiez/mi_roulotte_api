@@ -12,7 +12,8 @@ app.use((ctx, next) =>
     cors({
         origin: [ctx.env.HOST, ctx.env.STUDIO_HOST],
         allowMethods: ["GET", "POST", "PUT", "DELETE"],
-        allowHeaders: ["Authorization", "X-Api-Key", "Content-Type", "X-Filename"]
+        allowHeaders: ["Authorization", "X-Api-Key", "Content-Type", "X-Filename"],
+        credentials: true
     })(ctx, next)
 );
 app.route("/auth", authRoutes);

@@ -5,6 +5,7 @@ import { compareHash, generateHash, generateToken } from "@utils/crypto";
 import { DrizzleQueryError, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { getConnInfo } from "hono/cloudflare-workers";
+import { setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 import { Resend } from "resend";
@@ -111,33 +112,66 @@ export const login: Handler<Env> = async (ctx) => {
             });
         const sessionData = await sessionQuery.get();
 
-        // Create tokens
-        const token = await generateToken(
-            {
-                id: data.id,
-                username: data.username,
-                role: data.role
-            },
-            ctx.env.AUTH_SECRET,
-            60 * 15 // 15 min
-        );
-        const refreshToken = await generateToken(
-            {
-                id: sessionData.id,
-                uid: sessionData.uid,
-                refresh: sessionData.refresh
-            },
-            ctx.env.REFRESH_AUTH_SECRET,
-            60 * 60 * 24 * 30 // 30 days
-        );
+        if (body.useCookies) {
+            // Create cookies
+            setCookie(ctx, "username", data.username, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "Strict",
+                path: "/",
+                maxAge: 60 * 15 // 15 min
+            });
+            setCookie(ctx, "role", data.role, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "Strict",
+                path: "/",
+                maxAge: 60 * 15 // 15 min
+            });
+            setCookie(ctx, "user", sessionData.uid, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "Strict",
+                path: "/",
+                maxAge: 60 * 60 * 24 * 30 // 30 days
+            });
+            setCookie(ctx, "refresh", sessionData.id, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "Strict",
+                path: "/",
+                maxAge: 60 * 60 * 24 * 30 // 30 days
+            });
+            return ctx.json({ success: true }, 200);
+        } else {
+            // Create tokens
+            const token = await generateToken(
+                {
+                    id: data.id,
+                    username: data.username,
+                    role: data.role
+                },
+                ctx.env.AUTH_SECRET,
+                60 * 15 // 15 min
+            );
+            const refreshToken = await generateToken(
+                {
+                    id: sessionData.id,
+                    uid: sessionData.uid,
+                    refresh: sessionData.refresh
+                },
+                ctx.env.REFRESH_AUTH_SECRET,
+                60 * 60 * 24 * 30 // 30 days
+            );
 
-        return ctx.json(
-            {
-                token,
-                refreshToken
-            },
-            200
-        );
+            return ctx.json(
+                {
+                    token,
+                    refreshToken
+                },
+                200
+            );
+        }
     } catch (err) {
         if (err instanceof ZodError)
             throw new HTTPException(422, {

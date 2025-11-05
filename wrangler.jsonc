@@ -28,12 +28,12 @@
         "API_HOST": "https://api.miroulotte.es",
         "CDN_HOST": "https://cdn.miroulotte.es",
         "HOST": "https://miroulotte.es",
-        "STUDIO_HOST": "https://studio.miroulotte.es"
-    }
-    // "routes": [
-    //     {
-    //         "pattern": "api.miroulotte.es",
-    //         "custom_domain": true
-    //     }
-    // ]
+        "STUDIO_HOST": "http://localhost:3020"
+    },
+    "routes": [
+        {
+            "pattern": "api.miroulotte.es",
+            "custom_domain": true
+        }
+    ]
 }

@@ -21,7 +21,8 @@ export const LoginUser = z.object({
         .min(8, "must be at least 8 characters long")
         .refine((val) => /[A-Z]/.test(val), "must contain at least one uppercase letter")
         .refine((val) => /[a-z]/.test(val), "must contain at least one lowercase letter")
-        .refine((val) => /[0-9]/.test(val), "must contain at least one number")
+        .refine((val) => /[0-9]/.test(val), "must contain at least one number"),
+    useCookies: z.boolean().optional()
 });
 
 export const RegisterUser = z.object({

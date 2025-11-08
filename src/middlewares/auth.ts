@@ -87,28 +87,28 @@ const requireRole = (role: keyof typeof roleHierarchy): MiddlewareHandler<Env> =
 
                 setCookie(ctx, "username", userData.username, {
                     httpOnly: true,
-                    secure: true,
+                    secure: ctx.env.ENVIRONMENT === "production",
                     sameSite: "Strict",
                     path: "/",
                     maxAge: 60 * 15 // 15 min
                 });
                 setCookie(ctx, "role", userData.role, {
                     httpOnly: true,
-                    secure: true,
+                    secure: ctx.env.ENVIRONMENT === "production",
                     sameSite: "Strict",
                     path: "/",
                     maxAge: 60 * 15 // 15 min
                 });
                 setCookie(ctx, "user", sessionData.uid, {
                     httpOnly: true,
-                    secure: true,
+                    secure: ctx.env.ENVIRONMENT === "production",
                     sameSite: "Strict",
                     path: "/",
                     maxAge: 60 * 60 * 24 * 30 // 30 days
                 });
                 setCookie(ctx, "refresh", sessionData.id, {
                     httpOnly: true,
-                    secure: true,
+                    secure: ctx.env.ENVIRONMENT === "production",
                     sameSite: "Strict",
                     path: "/",
                     maxAge: 60 * 60 * 24 * 30 // 30 days

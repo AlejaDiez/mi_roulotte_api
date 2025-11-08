@@ -1,6 +1,6 @@
 {
     "name": "mi_roulotte_api",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Backend API for a blog where I share our family adventures and travel experiences on the road with our caravan.",
     "homepage": "https://api.miroulotte.es",
     "repository": {
@@ -12,7 +12,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "dotenv -- wrangler dev --port 3010",
+        "dev": "dotenv -- wrangler dev --port 3010 --env dev",
         "deploy": "wrangler deploy --minify",
         "cf-typegen": "dotenv -- wrangler types --env-interface=Bindings",
         "db:generate": "drizzle-kit generate --name=migration",
@@ -23,20 +23,20 @@
         "db:migrate:remote": "wrangler d1 migrations apply mi-roulotte-db --remote"
     },
     "dependencies": {
-        "bcryptjs": "^3.0.2",
-        "drizzle-orm": "^0.44.5",
-        "hono": "^4.9.8",
+        "bcryptjs": "^3.0.3",
+        "drizzle-orm": "^0.44.7",
+        "hono": "^4.10.4",
         "jose": "^6.1.0",
-        "resend": "^6.1.0",
-        "zod": "^4.1.11"
+        "resend": "^6.4.2",
+        "zod": "^4.1.12"
     },
     "devDependencies": {
-        "@types/node": "^24.5.2",
+        "@types/node": "^24.10.0",
         "better-sqlite3": "^12.4.1",
-        "dotenv-cli": "^10.0.0",
-        "drizzle-kit": "^0.31.4",
+        "dotenv-cli": "^11.0.0",
+        "drizzle-kit": "^0.31.6",
         "prettier": "^3.6.2",
         "prettier-plugin-organize-imports": "^4.3.0",
-        "wrangler": "^4.39.0"
+        "wrangler": "^4.46.0"
     }
 }

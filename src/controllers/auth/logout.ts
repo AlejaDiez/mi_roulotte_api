@@ -12,9 +12,7 @@ export const logout: Handler<Env> = async (ctx) => {
     // Delete all sessions
     await query;
     // Delete cookies
-    deleteCookie(ctx, "username");
-    deleteCookie(ctx, "role");
-    deleteCookie(ctx, "user");
+    deleteCookie(ctx, "token");
     deleteCookie(ctx, "refresh");
     return ctx.body(null, 204);
 };

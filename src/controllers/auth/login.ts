@@ -112,30 +112,36 @@ export const login: Handler<Env> = async (ctx) => {
             });
         const sessionData = await sessionQuery.get();
 
+        // Create tokens
+        const token = await generateToken(
+            {
+                id: data.id,
+                username: data.username,
+                role: data.role
+            },
+            ctx.env.AUTH_SECRET,
+            60 * 15 // 15 min
+        );
+        const refreshToken = await generateToken(
+            {
+                id: sessionData.id,
+                uid: sessionData.uid,
+                refresh: sessionData.refresh
+            },
+            ctx.env.REFRESH_AUTH_SECRET,
+            60 * 60 * 24 * 30 // 30 days
+        );
+
         if (body.useCookies) {
             // Create cookies
-            setCookie(ctx, "username", data.username, {
+            setCookie(ctx, "token", token, {
                 httpOnly: true,
                 secure: ctx.env.ENVIRONMENT === "production",
                 sameSite: "Strict",
                 path: "/",
                 maxAge: 60 * 15 // 15 min
             });
-            setCookie(ctx, "role", data.role, {
-                httpOnly: true,
-                secure: ctx.env.ENVIRONMENT === "production",
-                sameSite: "Strict",
-                path: "/",
-                maxAge: 60 * 15 // 15 min
-            });
-            setCookie(ctx, "user", sessionData.uid, {
-                httpOnly: true,
-                secure: ctx.env.ENVIRONMENT === "production",
-                sameSite: "Strict",
-                path: "/",
-                maxAge: 60 * 60 * 24 * 30 // 30 days
-            });
-            setCookie(ctx, "refresh", sessionData.id, {
+            setCookie(ctx, "refresh", refreshToken, {
                 httpOnly: true,
                 secure: ctx.env.ENVIRONMENT === "production",
                 sameSite: "Strict",
@@ -143,35 +149,14 @@ export const login: Handler<Env> = async (ctx) => {
                 maxAge: 60 * 60 * 24 * 30 // 30 days
             });
             return ctx.json({ success: true }, 200);
-        } else {
-            // Create tokens
-            const token = await generateToken(
-                {
-                    id: data.id,
-                    username: data.username,
-                    role: data.role
-                },
-                ctx.env.AUTH_SECRET,
-                60 * 15 // 15 min
-            );
-            const refreshToken = await generateToken(
-                {
-                    id: sessionData.id,
-                    uid: sessionData.uid,
-                    refresh: sessionData.refresh
-                },
-                ctx.env.REFRESH_AUTH_SECRET,
-                60 * 60 * 24 * 30 // 30 days
-            );
-
-            return ctx.json(
-                {
-                    token,
-                    refreshToken
-                },
-                200
-            );
         }
+        return ctx.json(
+            {
+                token,
+                refreshToken
+            },
+            200
+        );
     } catch (err) {
         if (err instanceof ZodError)
             throw new HTTPException(422, {

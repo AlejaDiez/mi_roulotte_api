@@ -1,6 +1,7 @@
 import { buildRelatedComments } from "@controllers/comments/get_all_comments";
 import { CommentsTable, StagesTable, TripsTable } from "@db/schemas";
 import { Stage } from "@models/stages";
+import { checkRole } from "@utils/auth_role";
 import { canFilter, filterColumns, subFields } from "@utils/filter_object";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
@@ -10,6 +11,7 @@ import { Handler } from "hono/types";
 export const getStageById: Handler<Env> = async (ctx, next) => {
     const tripId = ctx.req.param("trip_id");
     const stageId = ctx.req.param("stage_id");
+    const privileges = checkRole(ctx, "editor", (u, r) => u >= r);
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {
         id: StagesTable.id,
@@ -29,20 +31,19 @@ export const getStageById: Handler<Env> = async (ctx, next) => {
     };
 
     // Trip exists?
-    const tripQuery = drizzle(ctx.env.DB)
-        .select({ id: TripsTable.id })
-        .from(TripsTable)
-        .where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
+    const tripQuery = drizzle(ctx.env.DB).select({ id: TripsTable.id }).from(TripsTable);
+    if (privileges) tripQuery.where(eq(TripsTable.id, tripId));
+    else tripQuery.where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
     const tripExists = await tripQuery.get();
 
     if (!tripExists)
         throw new HTTPException(404, { message: `Trip with id '${tripId}' not found` });
 
     // Get stage
-    const query = drizzle(ctx.env.DB)
-        .select(filterColumns(columns, fields))
-        .from(StagesTable)
-        .where(
+    const query = drizzle(ctx.env.DB).select(filterColumns(columns, fields)).from(StagesTable);
+    if (privileges) query.where(and(eq(StagesTable.id, stageId), eq(StagesTable.tripId, tripId)));
+    else
+        query.where(
             and(
                 eq(StagesTable.id, stageId),
                 eq(StagesTable.tripId, tripId),

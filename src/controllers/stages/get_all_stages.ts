@@ -1,31 +1,34 @@
 import { StagesTable, TripsTable } from "@db/schemas";
-import { StagePreview } from "@models/stages";
+import { ExtendedStagePreview, StagePreview } from "@models/stages";
+import { checkRole } from "@utils/auth_role";
 import { filterColumns } from "@utils/filter_object";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, asc, count, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
 export const getAllStages: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
+    const privileges = checkRole(ctx, "editor", (u, r) => u >= r);
     const fields = ctx.req.query("fields")?.split(",");
     const page = ctx.req.query("page") ? Number(ctx.req.query("page")) : undefined;
     const limit = ctx.req.query("limit") ? Number(ctx.req.query("limit")) : undefined;
     const paginated = page && !isNaN(page) && limit && !isNaN(limit) && limit > 0;
     const columns = {
+        id: StagesTable.id,
         name: StagesTable.name,
         date: StagesTable.date,
         title: StagesTable.title,
         description: StagesTable.description,
         image: StagesTable.image,
+        published: StagesTable.published,
         url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
     };
 
     // Trip exists?
-    const tripQuery = drizzle(ctx.env.DB)
-        .select({ id: TripsTable.id })
-        .from(TripsTable)
-        .where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
+    const tripQuery = drizzle(ctx.env.DB).select({ id: TripsTable.id }).from(TripsTable);
+    if (privileges) tripQuery.where(eq(TripsTable.id, tripId));
+    else tripQuery.where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
     const tripExists = await tripQuery.get();
 
     if (!tripExists)
@@ -35,14 +38,14 @@ export const getAllStages: Handler<Env> = async (ctx) => {
     const query = drizzle(ctx.env.DB)
         .select(filterColumns(columns, fields))
         .from(StagesTable)
-        .where(and(eq(StagesTable.tripId, tripId), eq(StagesTable.published, true)));
+        .orderBy(asc(StagesTable.date));
+    if (privileges) query.where(eq(StagesTable.tripId, tripId));
+    else query.where(and(eq(StagesTable.tripId, tripId), eq(StagesTable.published, true)));
+    if (paginated) query.offset((page - 1) * limit).limit(limit);
 
-    // Paginate
-    if (paginated) {
-        query.offset((page - 1) * limit).limit(limit);
-    }
-
-    const data = await query.then((e) => e.map((e) => StagePreview.parse(e)));
+    const data = await query.then((e) =>
+        e.map((e) => (privileges ? ExtendedStagePreview.parse(e) : StagePreview.parse(e)))
+    );
 
     // Get pagination info
     if (paginated) {

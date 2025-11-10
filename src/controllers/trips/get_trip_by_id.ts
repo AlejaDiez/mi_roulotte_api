@@ -1,15 +1,17 @@
 import { buildRelatedComments } from "@controllers/comments/get_all_comments";
 import { CommentsTable, StagesTable, TripsTable } from "@db/schemas";
-import { StagePreview } from "@models/stages";
+import { ExtendedStagePreview, StagePreview } from "@models/stages";
 import { Trip } from "@models/trips";
+import { checkRole } from "@utils/auth_role";
 import { canFilter, filterColumns, subFields } from "@utils/filter_object";
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import { Handler } from "hono/types";
 
 export const getTripById: Handler<Env> = async (ctx) => {
     const tripId = ctx.req.param("trip_id");
+    const privileges = checkRole(ctx, "editor", (u, r) => u >= r);
     const fields = ctx.req.query("fields")?.split(",");
     const columns = {
         id: TripsTable.id,
@@ -27,10 +29,9 @@ export const getTripById: Handler<Env> = async (ctx) => {
         createdAt: TripsTable.createdAt,
         updatedAt: TripsTable.updatedAt
     };
-    const query = drizzle(ctx.env.DB)
-        .select(filterColumns(columns, fields))
-        .from(TripsTable)
-        .where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
+    const query = drizzle(ctx.env.DB).select(filterColumns(columns, fields)).from(TripsTable);
+    if (privileges) query.where(eq(TripsTable.id, tripId));
+    else query.where(and(eq(TripsTable.id, tripId), eq(TripsTable.published, true)));
 
     // Run query
     const data: any = await query.get();
@@ -40,19 +41,25 @@ export const getTripById: Handler<Env> = async (ctx) => {
     // Get satges
     if (canFilter("stages", fields)) {
         const columns = {
+            id: StagesTable.id,
             name: StagesTable.name,
             date: StagesTable.date,
             title: StagesTable.title,
             description: StagesTable.description,
             image: StagesTable.image,
+            published: StagesTable.published,
             url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${StagesTable.tripId}, '/', ${StagesTable.id})`
         };
         const query = drizzle(ctx.env.DB)
             .select(filterColumns(columns, subFields("stages", fields)))
             .from(StagesTable)
-            .where(and(eq(StagesTable.tripId, tripId), eq(StagesTable.published, true)));
+            .orderBy(asc(StagesTable.date));
+        if (privileges) query.where(eq(StagesTable.tripId, tripId));
+        else query.where(and(eq(StagesTable.tripId, tripId), eq(StagesTable.published, true)));
 
-        data.stages = await query.then((e) => e.map((e) => StagePreview.parse(e)));
+        data.stages = await query.then((e) =>
+            e.map((e) => (privileges ? ExtendedStagePreview.parse(e) : StagePreview.parse(e)))
+        );
     }
 
     // Get comments

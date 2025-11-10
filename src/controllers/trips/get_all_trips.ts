@@ -1,36 +1,39 @@
 import { TripsTable } from "@db/schemas";
-import { TripPreview } from "@models/trips";
+import { ExtendedTripPreview, TripPreview } from "@models/trips";
+import { checkRole } from "@utils/auth_role";
 import { filterColumns } from "@utils/filter_object";
-import { count, eq, sql } from "drizzle-orm";
+import { asc, count, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Handler } from "hono/types";
 
 export const getAllTrips: Handler<Env> = async (ctx) => {
+    const privileges = checkRole(ctx, "editor", (u, r) => u >= r);
     const fields = ctx.req.query("fields")?.split(",");
     const page = ctx.req.query("page") ? Number(ctx.req.query("page")) : undefined;
     const limit = ctx.req.query("limit") ? Number(ctx.req.query("limit")) : undefined;
     const paginated = page && !isNaN(page) && limit && !isNaN(limit) && limit > 0;
     const columns = {
+        id: TripsTable.id,
         name: TripsTable.name,
         date: TripsTable.date,
         title: TripsTable.title,
         description: TripsTable.description,
         image: TripsTable.image,
         video: TripsTable.video,
+        published: TripsTable.published,
         url: sql<string>`CONCAT(${ctx.env.HOST}, '/', ${TripsTable.id})`
     };
     const query = drizzle(ctx.env.DB)
         .select(filterColumns(columns, fields))
         .from(TripsTable)
-        .where(eq(TripsTable.published, true));
-
-    // Paginate
-    if (paginated) {
-        query.offset((page - 1) * limit).limit(limit);
-    }
+        .orderBy(asc(TripsTable.date));
+    if (!privileges) query.where(eq(TripsTable.published, true));
+    if (paginated) query.offset((page - 1) * limit).limit(limit);
 
     // Get all trips
-    const data = await query.then((e) => e.map((e) => TripPreview.parse(e)));
+    const data = await query.then((e) =>
+        e.map((e) => (privileges ? ExtendedTripPreview.parse(e) : TripPreview.parse(e)))
+    );
 
     // Get pagination info
     if (paginated) {

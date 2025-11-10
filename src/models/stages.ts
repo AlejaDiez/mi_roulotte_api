@@ -30,6 +30,17 @@ export const StagePreview = Stage.pick({
     url: true
 });
 
+export const ExtendedStagePreview = Stage.pick({
+    id: true,
+    name: true,
+    date: true,
+    title: true,
+    description: true,
+    image: true,
+    published: true,
+    url: true
+});
+
 export const InsertStage = z.object({
     id: z
         .string({

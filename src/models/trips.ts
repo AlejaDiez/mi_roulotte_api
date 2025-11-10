@@ -1,6 +1,6 @@
 import z from "zod";
 import { Comment } from "./comments";
-import { StagePreview } from "./stages";
+import { ExtendedStagePreview, StagePreview } from "./stages";
 
 export const Trip = z
     .object({
@@ -12,7 +12,7 @@ export const Trip = z
         image: z.string().nullable(),
         video: z.string().nullable(),
         content: z.array(z.any()),
-        stages: z.array(StagePreview),
+        stages: z.array(z.union([ExtendedStagePreview, StagePreview])),
         keywords: z.array(z.string()).nullable(),
         published: z.boolean(),
         allowComments: z.boolean(),
@@ -30,6 +30,18 @@ export const TripPreview = Trip.pick({
     description: true,
     image: true,
     video: true,
+    url: true
+});
+
+export const ExtendedTripPreview = Trip.pick({
+    id: true,
+    name: true,
+    date: true,
+    title: true,
+    description: true,
+    image: true,
+    video: true,
+    published: true,
     url: true
 });
 
